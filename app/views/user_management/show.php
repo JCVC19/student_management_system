@@ -57,8 +57,9 @@ if(empty($user)){
                     </tbody>
                 </table>
             </div>
+            <?php if($user->role == 'instructor'): ?>
             <div class="list-table">
-                <?php if($user->role == 'instructor'): ?>
+                
                 <!-- <h4 class="text-center">Handled Subjects:</h4> -->
                 <table id = "listsTable" class = "table table-striped">
                     <!-- <caption class="text-center"><h4>Handled Subjects:</h4></caption> -->
