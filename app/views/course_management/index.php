@@ -74,6 +74,10 @@
                 </thead>
                 <tbody>
                     <?php
+                    if($courses == null) {
+
+                    }
+                    else {
                         foreach($courses as $course):
                             $isEnrolled = false;
                             foreach ($subjects as $subject) {
@@ -99,7 +103,8 @@
                                 <?php endif; ?>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endforeach; 
+                    } ?>
                 </tbody>
             </table>
         </div>
