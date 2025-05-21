@@ -26,7 +26,26 @@ Student::setConnection($db);
 
 $student = Student::find($id);
 
+$enrolled = $student->subjects();
 
+if($enrolled){
+    include  '../layout/footer.php'; 
+    echo '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Cannot delete student with enrolled subjects",
+                showConfirmButton: false,
+                timer: 1500,
+                    customClass: {
+                        container: "custom-container"
+                    }
+            }).then(function(){
+                window.location = "index.php";
+            });
+        </script>';
+    exit();
+}
 if(empty($student)){
     http_response_code(404);
     echo "<div class='container-full error-container'>

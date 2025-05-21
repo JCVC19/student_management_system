@@ -2,7 +2,9 @@
     $db = new Database();
     $conn = $db->getConnection();
 ?>
-<?php require_once '../../models/User.php'; 
+<?php 
+require_once '../../models/User.php'; 
+require_once '../../models/Subject.php';
 
 session_start([
     'cookie_lifetime' => 86400, // seconds (1 day)
@@ -20,8 +22,29 @@ require '../../../permission.php';
 
 User::setConnection($conn);
 $user = User::find($_GET['id']);
+$subjects = Subject::findByInstructor($user->id);
+
+if($subjects){
+    include  '../layout/footer.php'; 
+    echo '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Cannot delete user with subjects",
+                showConfirmButton: false,
+                timer: 1500,
+                    customClass: {
+                        container: "custom-container"
+                    }
+            }).then(function(){
+                window.location = "index.php";
+            });
+        </script>';
+    exit();
+}
 
 if ($user->role == 'admin'){
+    include  '../layout/footer.php'; 
     echo '<script>
             Swal.fire({
                 icon: "error",
@@ -49,28 +72,42 @@ if(empty($user)){
     exit();
 }
 
+
+
 $user->delete();
 
     
-    if($user){
-        echo '<script> window.location.href = "index.php"; </script>';
-    }else{
-        echo '<script>
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Record has been failed to delete!",
-                    showConfirmButton: false,
-                    timer: 1500,
-                        customClass: {
-                            container: "custom-container"
-                        }
-                }).then(function(){
-                    window.location = "index.php";
-                });
-            </script>';
-    }
-
-    ?>
-
-<?php include  '../layout/footer.php'; ?>
+if($user){
+    echo '<script>
+            Swal.fire({
+                icon: "success",
+                title: "Deleted",
+                text: "Record has been deleted successfully!",
+                showConfirmButton: false,
+                timer: 1500,
+                    customClass: {
+                        container: "custom-container"
+                    }
+            }).then(function(){
+                window.location = "index.php";
+            });
+        </script>';
+}else{
+    echo '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Record has been failed to delete!",
+                showConfirmButton: false,
+                timer: 1500,
+                    customClass: {
+                        container: "custom-container"
+                    }
+            }).then(function(){
+                window.location = "index.php";
+            });
+        </script>';
+}
+    
+include  '../layout/footer.php'; 
+?>
