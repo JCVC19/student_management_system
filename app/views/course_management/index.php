@@ -80,10 +80,15 @@
                     else {
                         foreach($courses as $course):
                             $isEnrolled = false;
-                            foreach ($subjects as $subject) {
-                                if ($subject->course()->id == $course->id) {
-                                    $isEnrolled = true;
-                                    break;
+                            if($subjects == null) {
+                                $isEnrolled = false;
+                            }
+                            else {
+                                foreach ($subjects as $subject) {
+                                    if ($subject->course()->id == $course->id) {
+                                        $isEnrolled = true;
+                                        break;
+                                    }
                                 }
                             }
                     ?>
