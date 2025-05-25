@@ -68,7 +68,7 @@
                         <th>ID</th>
                         <th>Code</th>
                         <th>Name</th>
-                        <th>Create At</th>
+                        <th>Created At</th>
                         <th class = "d-flex" style = "white-space: nowrap;">Action</th>
                     </tr>
                 </thead>
@@ -96,7 +96,7 @@
                             <td><?=$course->id ?></td>  
                             <td><?=$course->code ?></td>
                             <td><?=$course->name?></td>
-                            <td><?=$course->created_at ?></td>
+                            <td><?= date('F j, Y',strtotime($course->created_at)) ?></td>
                             <td style = "white-space: nowrap;">
                                 <a href="show.php?id=<?=$course->id?>" class="btn btn-info"><i class="fa-regular fa-eye"></i> View</a>
                                 
